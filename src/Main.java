@@ -195,15 +195,29 @@ public class Main {
 //        System.out.println(paypal.protectedMessage);
 //        System.out.println(paypal.);
 
-//        *ENCAPSULATION - attritubes of a class will be hidden or private. Can be access only through methods setter and getters
+//        *ENCAPSULATION - attributes of a class will be hidden or private. Can be access only through methods setter and getters
 //            MAke the attributes private if you don't have a reason to make them public/protected
-        Paypal paypal = new Paypal(12345);
+//        Paypal paypal = new Paypal(12345);
 //        paypal.setCardNumber(6789);
-        System.out.println(paypal.getCardNumber());
+//        System.out.println(paypal.getCardNumber());
 
+//        *INTERFACE a template that can be applied a class. similar to inheritance but specifies what a class has/must do.
+//            classes can apply more than one interface.
+//            Fish fish = new Fish();
+//            Hawk hawk = new Hawk();
+//            hawk.hunt();
+//            fish.flee();
+//            fish.hunt();
 
+//        *POLYMORPHISM greek word "poly" - many, "morph"- form. The ability of an object to identify as more than one type.
+            Payment paypal = new Paypal(1234);
+            Payment creditCard = new CreditCard();
 
+            Payment[] cards = {paypal, creditCard};
 
+            for (Payment c : cards) {
+                c.paymentDetails();
+            }
 
     }
 
