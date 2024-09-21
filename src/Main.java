@@ -167,10 +167,39 @@ public class Main {
 //        personName.running();
 
 //        *SUPER keyword refers to the superclass (parent) of an object very similar to the this() keyword.
-            Yasmin personName = new Yasmin("Soba",22,"supportive");
-            System.out.println(personName.toString());
+//            Yasmin personName = new Yasmin("Soba",22,"supportive");
+//            System.out.println(personName.toString());
+
+//        *ABSTRACT classes cannot be instantiated, but they can have a subclass abstract methods are declared without an implementation.
+//        Payment payment = new Paypal(); //use Parent class(parent) as reference when sub-class(Paypal) methods is covered in parent class
+////        Payment creditcard = new CreditCard();
+//        if(payment instanceof Payment) { // use this condition when you want to access the sub-class method that is only specified in that sub-class(Paypal)
+//            Paypal paypal = (Paypal) payment;
+//            paypal.validateCard();
+//        }
+//        payment.paymentDetails();
+//        payment.receipt();
+////        creditcard.paymentDetails();
+////        creditcard.receipt();
 
 
+
+
+
+//        *ACCESS MODIFIERS (protect, private, public)
+        //protected can access the attributes and method when the sub-class extends parent class.
+        //public can access everywhere class,package, subclass or world.
+        //private can only access within the class itself.
+//        Payment paypal = new Paypal();
+//        Paypal paypal = new Paypal();
+//        System.out.println(paypal.protectedMessage);
+//        System.out.println(paypal.);
+
+//        *ENCAPSULATION - attritubes of a class will be hidden or private. Can be access only through methods setter and getters
+//            MAke the attributes private if you don't have a reason to make them public/protected
+        Paypal paypal = new Paypal(12345);
+//        paypal.setCardNumber(6789);
+        System.out.println(paypal.getCardNumber());
 
 
 
