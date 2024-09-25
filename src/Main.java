@@ -1,13 +1,10 @@
-import javax.swing.*;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
 //        *USER INPUT utilizing 'Scanner'
 //        Scanner scanner = new Scanner(System.in);
@@ -210,19 +207,208 @@ public class Main {
 //            fish.hunt();
 
 //        *POLYMORPHISM greek word "poly" - many, "morph"- form. The ability of an object to identify as more than one type.
-            Payment paypal = new Paypal(1234);
-            Payment creditCard = new CreditCard();
+//        Payment paypal = new Paypal(1234); POLYMORPHISM (method overriding) since your are overriding the method content
+//        Payment creditCard = new CreditCard();
+//        Payment[] cards = {paypal, creditCard};
+//        for (Payment c : cards) {
+//            c.paymentDetails();
+//            c.receipt();
+//        }
 
-            Payment[] cards = {paypal, creditCard};
+//        *DYNAMIC POLYMORPHISM
+//        Scanner scanner = new Scanner(System.in);
+//        Payment payment;
+//        int choice = 0;
+//        // Keep asking for input until a valid choice is made
+//        while (choice != 1 && choice != 2) {
+//            System.out.println("Which card do you want to use?");
+//            System.out.println("Press '1' for Paypal or '2' for Credit card:");
+//            // Check if the input is an integer
+//            if (scanner.hasNextInt()) {
+//                choice = scanner.nextInt();
+//                if (choice == 1) {
+//                    payment = new Paypal(1234);
+//                    payment.paymentDetails();
+//                    payment.receipt();
+//                } else if (choice == 2) {
+//                    payment = new CreditCard();
+//                    payment.paymentDetails();
+//                    payment.receipt();
+//                } else {
+//                    System.out.println("Invalid choice. Please enter '1' for Paypal or '2' for Credit card.");
+//                }
+//            } else {
+//                System.out.println("Invalid input. Please enter a number (1 or 2).");
+//                scanner.next(); // Clear the invalid input
+//            }
+//        }
+//        scanner.close();  // Close the scanner after usage
 
-            for (Payment c : cards) {
-                c.paymentDetails();
+
+//        *EXCEPTION HANDLING an event that occurs du=ring the execution of a program that disrups the normal flow of instructions.
+//        Checked Exceptions (must be handled)
+//        IOException: I/O operation failures (e.g., reading/writing files, network communication).
+//        SQLException: Database access errors (e.g., connection failure, SQL syntax issues).
+//                FileNotFoundException: File not found when trying to read/write.
+//                ClassNotFoundException: Class not found when dynamically loading.
+//        InterruptedException: Thread interrupted during sleep or wait.
+//        MalformedURLException: Invalid URL format.
+//                Unchecked Exceptions (Runtime Exceptions)
+//        NullPointerException: Accessing a method or field on a null object.
+//                ArrayIndexOutOfBoundsException: Accessing array indices beyond the bounds.
+//        ArithmeticException: Invalid arithmetic operations (e.g., division by zero).
+//                IllegalArgumentException: Invalid argument passed to a method.
+//        NumberFormatException: Conversion failure from string to number.
+//        ClassCastException: Incorrect casting of objects.
+//        IllegalStateException: Method invoked in an inappropriate object state.
+//        Scanner scanner = new Scanner(System.in);
+//        try {
+//            System.out.println("Enter a whole number to divide: ");
+//            int x = scanner.nextInt();
+//
+//            System.out.println("Enter a whole number to divided by: ");
+//            int y = scanner.nextInt();
+//
+//            int z = x/y;
+//            System.out.println("The result is: " + z);
+//            }
+//        catch (ArithmeticException e) {
+//               System.out.println("You can't divided by zero you moron!");
+//            }
+//        catch (InputMismatchException e) {
+//            System.out.println("Please enter a valid number! myg.");
+//        }
+//        catch (Exception e) { //this will print all the errors like a general exception to catch
+//            System.out.println("Something went wrong.");
+//        }
+//        finally {
+//            System.out.println("This will always print .");
+//        }
+//        *FILE  an abstract representation of file and directory pathnames
+//        File file = new File("java_message.txt");
+//       if(file.exists()) {
+//           System.out.println("The file exist!");
+//           System.out.println(file.getPath()); //path name
+//           System.out.println(file.getAbsoluteFile()); // full path
+//           System.out.println(file.isFile()); // check if the file is file.
+//           file.delete();
+//       } else {
+//           System.out.println("The file doesn't exist!");
+//       }
+
+//        *FILEWRITER  way to write text data to files in Java, making it useful for various applications where file output is needed.
+//        try(BufferedWriter writer = new BufferedWriter(new FileWriter("personData.text", true));) { //append flag - true means append it instead of overwite the previous data
+//            writer.write("Lotsu Soba\n");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+//        *BUFFEREDREADER wraps around a Reader (like FileReader) to buffer input. Reads larger chunks of data at once, which improves performance. Provides a readLine() method to read an entire line at once.
+//        *FILEREADER class for reading character files. Reads data one character at a time.
+
+
+//        try(BufferedReader reader = new BufferedReader(new FileReader("personData.text"));) {
+//            String line;
+//            while((line = reader.readLine()) != null) { // Each time you go through the loop, it reads a new line.
+//                System.out.println(line);
+//            }
+//        } catch (IOException e) {
+//                e.printStackTrace();
+//        }
+
+//        *INPUTSTREAM use for reading byte strings
+//        *OUTPUTSTREAM use for writing a byte strings
+        try(BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream("C:/Users/Mark Piolo Pascual/Downloads/byte_character_content.txt"));
+            BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream("C:/Users/Mark Piolo Pascual/Downloads/created_byte_character_content.txt"))) {
+            byte[] buffer = new byte[1024]; //This buffer is typically used for reading or writing data in chunks, which helps improve performance by reducing the number of I/O operations.
+            int byteContent;
+            while((byteContent = inputStream.read(buffer)) != -1 ) { // read(buffer) method returns the number of bytes read, which is useful for processing chunks of data efficiently.
+                for (int i = 0; i < byteContent; i++) {
+                    System.out.print((char) buffer[i]); // Print each byte value in the buffer and the (char) means it prints the actual character representation of the byte values stored in the buffer.
+                }
+//                outputStream.write(buffer, 0, byteContent); // 0 writing will begin at the very start of the buffer.
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+//        // Writing
+//        try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("path/to/outputfile"))) {
+//            byte[] data = "Hello, Buffered World!".getBytes();
+//            bos.write(data); // Write the byte array to the output stream
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+
+//        *JAVA COLLECTION FRAMEWORKS
+//        *LINKEDLIST  A doubly linked list, faster for inserting/removing in the middle, slower for random access.
+//        List<String> linkLists = new LinkedList<String>();
+//        linkLists.add("A");
+//        linkLists.add("B");
+//        linkLists.add("C");
+//        linkLists.remove(2);
+//        linkLists.add(1, "D");
+//        System.out.print(linkLists);
+
+//        ARRAYLIST  A resizable array, great for random access. Slower for adding/removing elements in the middle.
+//        List<String> arrayList = new ArrayList<String>();
+//        arrayList.add("Y");
+//        arrayList.add("S");
+//        arrayList.add("M");
+//        arrayList.remove(2);
+//        arrayList.add(1, "M");
+//        arrayList.indexOf("Y");
+//        System.out.print(arrayList);
+
+//        *HASMAP is similar with ArrayList, but with key-value pairs stores objects, need to use wrapper-class ex.(name, address), (username, userID).
+//        Map<Integer, String> userMap = new HashMap<Integer, String>(); //Does not maintain any order and may appear to reorder keys based on internal hashing..
+//        userMap.put(1, "Yasmin");
+//        userMap.put(3, "Mark");
+//        userMap.put(2, "Dos");
+//        userMap.put(4, "Lotso");
+//        System.out.println(userMap);
+//        System.out.println(userMap.containsValue(2002)); //chech if the userMap  contains the value(2002) returns true if it's true.
+//        userMap.replace("Yasmin",29); // (key, and the newValue);
+
+//        for(Map.Entry<String, Integer> user : userMap.entrySet()) { // this is how you iterate the items in map(old iterate).
+//            String name = user.getKey();
+//            Integer id = user.getValue();
+//            System.out.println("Username: "+name+"\nId: "+id+"\n");
+//        }
+//        userMap.forEach((name, id) -> System.out.println("Username: "+name+"\nId: "+id+"\n"));
+
+
+//        *TREEMAP similar to HashMap but follow the orders. Elements(key-value pairs) are sorted. TreeMap refers to the sorted order of the keys.
+//        Map<Integer, String> userTreemap = new TreeMap<Integer, String>();
+//        userTreemap.put(4, "Yasmin");
+//        userTreemap.put(3, "Mark");
+//        userTreemap.put(1, "Dos");
+//        userTreemap.put(3, "Lotso");
+//        System.out.println(userTreemap);
+//        Output: {1=Dos, 2=Mark, 3=Lotso, 4=Yasmin} //  Always reorders the keys in sorted order (ascending by default)
+
+//        *HASHSET Sets store individual elements (no key-value pairs), and all elements must be unique.
+//        Set<String> hashSets = new HashSet<String>();
+////            hashSets.add("Apple");
+////        hashSets.add("Orange");
+////        hashSets.add("Apple");
+////        System.out.println(hashSets);
+//        [Apple, Orange] // Output
+
+
+//        *MULTITHREADING By using multithreading, we can have multiple tasks run concurrently(at the same time). This way, while one task is waiting (like for a file to be read), another task can start executing without waiting for the first to finish.  By default, Java programs are single-threaded, meaning that the code executes line-by-line, from top to bottom,
+
+
+
+
+
 
     }
 
 
 //    EXAMPLE OF OVERLOAD METHODS
+//    *POLYMORPHISM (method overloading) same methods but different parameters.
 //    static int add(int a, int b) {
 //        return a + b;
 //    }
