@@ -1,10 +1,13 @@
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
 
 //        *USER INPUT utilizing 'Scanner'
 //        Scanner scanner = new Scanner(System.in);
@@ -318,19 +321,19 @@ public class Main {
 
 //        *INPUTSTREAM use for reading byte strings
 //        *OUTPUTSTREAM use for writing a byte strings
-        try(BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream("C:/Users/Mark Piolo Pascual/Downloads/byte_character_content.txt"));
-            BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream("C:/Users/Mark Piolo Pascual/Downloads/created_byte_character_content.txt"))) {
-            byte[] buffer = new byte[1024]; //This buffer is typically used for reading or writing data in chunks, which helps improve performance by reducing the number of I/O operations.
-            int byteContent;
-            while((byteContent = inputStream.read(buffer)) != -1 ) { // read(buffer) method returns the number of bytes read, which is useful for processing chunks of data efficiently.
-                for (int i = 0; i < byteContent; i++) {
-                    System.out.print((char) buffer[i]); // Print each byte value in the buffer and the (char) means it prints the actual character representation of the byte values stored in the buffer.
-                }
-//                outputStream.write(buffer, 0, byteContent); // 0 writing will begin at the very start of the buffer.
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try(BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream("C:/Users/Mark Piolo Pascual/Downloads/byte_character_content.txt"));
+//            BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream("C:/Users/Mark Piolo Pascual/Downloads/created_byte_character_content.txt"))) {
+//            byte[] buffer = new byte[1024]; //This buffer is typically used for reading or writing data in chunks, which helps improve performance by reducing the number of I/O operations.
+//            int byteContent;
+//            while((byteContent = inputStream.read(buffer)) != -1 ) { // read(buffer) method returns the number of bytes read, which is useful for processing chunks of data efficiently.
+//                for (int i = 0; i < byteContent; i++) {
+//                    System.out.print((char) buffer[i]); // Print each byte value in the buffer and the (char) means it prints the actual character representation of the byte values stored in the buffer.
+//                }
+////                outputStream.write(buffer, 0, byteContent); // 0 writing will begin at the very start of the buffer.
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
 //        // Writing
 //        try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("path/to/outputfile"))) {
@@ -398,10 +401,61 @@ public class Main {
 
 
 //        *MULTITHREADING By using multithreading, we can have multiple tasks run concurrently(at the same time). This way, while one task is waiting (like for a file to be read), another task can start executing without waiting for the first to finish.  By default, Java programs are single-threaded, meaning that the code executes line-by-line, from top to bottom,
+//        MultiThreading mything = new MultiThreading();
+//        Thread myThread = new Thread(mything);
+//        Thread myThread2 = new Thread(mything);
+//        Thread myThread3 = new Thread(mything);
+//        myThread.start();
+//        myThread2.start();
+//        myThread3.start();
+
+//        int coresCount = Runtime.getRuntime().availableProcessors();
+//        ExecutorService executorService = Executors.newFixedThreadPool(coresCount);
+//        for (int i = 0; i <= 10; i++) {
+//            executorService.submit(new MultiThreading(i));
+////            myThread.join(5000); // let the thread finish first before executing the next thread
+////            myThread.interrupt(); //Interrupt the thread after base on the sleep time in join(). Signals to the thread that it should stop
+//        }
+//        executorService.shutdown();
+//        try {
+//            // Wait for tasks to complete, with a timeout
+//            if (!executorService.awaitTermination(2, java.util.concurrent.TimeUnit.SECONDS)) {
+//                // If tasks are still running after the timeout finished, it force shutdown.
+//                executorService.shutdownNow();
+//            }
+//        } catch (InterruptedException e) {
+//            executorService.shutdownNow(); // Force shutdown on interruption
+//        }
+//
+//        System.out.println("Executor service shut down");
 
 
+//        *REENTRANTLOCK is synchronization mechanism in Java that allows threads to safely access shared resources by providing exclusive access to a block of code.
+//            Example in ecommerce; If multiple threads (representing different customer orders) try to access and modify the inventory at the same time, it could lead to problems, such as overselling a product.
+//        When one customer tries to buy a product, the system needs to check if the product is in stock and then decrease the inventory count. If another customer places an order at the same time, both orders might see that there is still inventory available, leading to overselling.
 
+//        Wait for the current thread to finish the critical section and after the thread is finish it will unlock so the next thread can access it.
 
+//        Example of this block of code
+//        public class Inventory {
+//            private int stock = 10; // Example inventory count
+//            private final ReentrantLock lock = new ReentrantLock();
+//
+//            public void processOrder(int orderId) { // Once the order is processed (or if stock is insufficient), it releases the lock. This allows other threads to acquire the lock and process their orders.
+//                lock.lock(); // Acquire the lock
+//                try {
+//                    if (stock > 0) {
+//                        System.out.println("Processing order ID: " + orderId);
+//                        stock--; // Decrease inventory
+//                        System.out.println("Order ID " + orderId + " processed successfully. Remaining stock: " + stock);
+//                    } else {
+//                        System.out.println("Order ID " + orderId + " cannot be processed. Out of stock!");
+//                    }
+//                } finally {
+//                    lock.unlock(); // Release the lock
+//                }
+//            }
+//        }
 
 
     }
